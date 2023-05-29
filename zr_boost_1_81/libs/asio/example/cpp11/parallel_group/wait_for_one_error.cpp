@@ -1,0 +1,62 @@
+//
+// wait_for_one_error.cpp
+// ~~~~~~~~~~~~~~~~~~~~~~
+//
+// Copyright (c) 2003-2022 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+//
+// Distributed under the Boost Software License, Version 1.0. (See accompanying
+// file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+//
+
+#include <boost/asio.hpp>
+#include <boost/asio/experimental/deferred.hpp>
+#include <boost/asio/experimental/parallel_group.hpp>
+#include <iostream>
+
+#if defined(BOOST_ASIO_HAS_POSIX_STREAM_DESCRIPTOR)
+
+int main()
+{
+  zr_boost_1_81::asio::io_context ctx;
+
+  zr_boost_1_81::asio::posix::stream_descriptor in(ctx, ::dup(STDIN_FILENO));
+  zr_boost_1_81::asio::steady_timer timer(ctx, std::chrono::seconds(5));
+
+  char data[1024];
+
+  zr_boost_1_81::asio::experimental::make_parallel_group(
+      in.async_read_some(
+        zr_boost_1_81::asio::buffer(data),
+        zr_boost_1_81::asio::deferred),
+      timer.async_wait(
+        zr_boost_1_81::asio::deferred)
+    ).async_wait(
+      zr_boost_1_81::asio::experimental::wait_for_one_error(),
+      [](
+          std::array<std::size_t, 2> completion_order,
+          zr_boost_1_81::system::error_code ec1, std::size_t n1,
+          zr_boost_1_81::system::error_code ec2
+      )
+      {
+        switch (completion_order[0])
+        {
+        case 0:
+          {
+            std::cout << "descriptor finished: " << ec1 << ", " << n1 << "\n";
+          }
+          break;
+        case 1:
+          {
+            std::cout << "timer finished: " << ec2 << "\n";
+          }
+          break;
+        }
+      }
+    );
+
+  ctx.run();
+}
+
+#else // defined(BOOST_ASIO_HAS_POSIX_STREAM_DESCRIPTOR)
+int main() {}
+#endif // defined(BOOST_ASIO_HAS_POSIX_STREAM_DESCRIPTOR)
