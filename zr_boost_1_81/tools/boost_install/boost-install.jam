@@ -898,7 +898,7 @@ rule generate-cmake-config- ( target : sources * : properties * )
             : true ;
         }
 
-        if $(name) = boost_mpi
+        if $(name) = zr_boost_1_81_mpi
         {
             print.text
 

@@ -1316,11 +1316,11 @@ rule bpl-test ( name : sources * : requirements * )
 {
     local s ;
     sources ?= $(name).py $(name).cpp ;
-    return [ testing.make-test run-pyd : $(sources) /boost/python//boost_python
+    return [ testing.make-test run-pyd : $(sources) /boost/python//zr_boost_1_81_python
         : $(requirements) : $(name) ] ;
 }
 
-# The same as bpl-test but additionally require (and link to) boost_numpy.
+# The same as bpl-test but additionally require (and link to) zr_boost_1_81_numpy.
 # Masked whenever NumPy is not enabled.
 rule numpy-test ( name : sources * : requirements * )
 {
@@ -1330,7 +1330,7 @@ rule numpy-test ( name : sources * : requirements * )
     sources ?= $(name).py $(name).cpp ;
     name = [ regex.replace $(name) "[/]" "~" ] ;
     return [ testing.make-test run-pyd
-        : $(sources) /boost/python//boost_numpy /boost/python//boost_python
+        : $(sources) /boost/python//zr_boost_1_81_numpy /boost/python//zr_boost_1_81_python
         : $(requirements) <include>$(numpy-include)
         : $(name) ] ;
 }
