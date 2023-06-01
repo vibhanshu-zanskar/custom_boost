@@ -162,9 +162,9 @@ void check_results(po::variables_map &vm, vector<string> unregistered)
 
    int expected_int_postitive = 41;
    int expected_int_negative = -42;
-   int expected_int_hex = 0x43;
-   int expected_int_oct = 044;
-   int expected_int_bin = 0b101010;
+   [[maybe_unused]] int expected_int_hex = 0x43;
+   [[maybe_unused]] int expected_int_oct = 044;
+   [[maybe_unused]] int expected_int_bin = 0b101010;
 
    float expected_float_positive = 51.1f;
    float expected_float_negative = -52.1f;
@@ -188,7 +188,7 @@ void check_results(po::variables_map &vm, vector<string> unregistered)
    bool expected_onoff_true = true;
    bool expected_onoff_false = false;
    bool expected_present_equal_true = true;
-   bool expected_present_no_equal_true = true;
+   [[maybe_unused]] bool expected_present_no_equal_true = true;
 
    assert(vm["global_string"].as<string>() == expected_global_string);
 

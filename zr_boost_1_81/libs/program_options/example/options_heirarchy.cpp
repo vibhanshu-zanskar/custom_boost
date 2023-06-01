@@ -321,12 +321,15 @@ void PrintOptions(OptionsHeirarchy options)
 int main(int ac, char* av[])
 {
    OptionsHeirarchy options;
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wcatch-value"
    try
    {
       options.ParseOptions(ac, av);
       PrintOptions(options);
    }
    catch (OptionsExitsProgram){}
+#pragma GCC diagnostic pop
 
    return 0;
 }

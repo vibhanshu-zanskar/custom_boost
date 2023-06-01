@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 project(zr_miniboost)
+set(CMAKE_CXX_FLAGS "-Wno-unused-variable")
 
 add_library(zr_miniboost_headers INTERFACE)
 target_include_directories(zr_miniboost_headers INTERFACE ./)
