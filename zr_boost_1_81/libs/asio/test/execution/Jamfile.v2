@@ -16,7 +16,7 @@ lib network ; # HAIKU
 
 project
   : requirements
-    <library>/boost/date_time//boost_date_time
+    <library>/boost/date_time//zr_boost_1_81_date_time
     <library>/boost/system//zr_boost_1_81_system
     <library>/boost/chrono//zr_boost_1_81_chrono
     <library>/boost/regex//zr_boost_1_81_regex
