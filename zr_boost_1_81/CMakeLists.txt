@@ -6,7 +6,13 @@ set(CMAKE_CXX_FLAGS "-Wno-unused-variable")
 add_library(zr_miniboost_headers INTERFACE)
 target_include_directories(zr_miniboost_headers INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 
-file(GLOB_RECURSE boost_sources CONFIGURE_DEPENDS libs/system/src/*.cpp libs/test/src/*.cpp libs/program_options/*.cpp libs/serialization/src/*.cpp libs/thread/src/pthread/*.cpp)
+file(GLOB_RECURSE boost_sources CONFIGURE_DEPENDS 
+                                    libs/system/src/*.cpp 
+                                    libs/test/src/*.cpp 
+                                    libs/program_options/*.cpp 
+                                    libs/serialization/*.cpp 
+                                    libs/log/src/*.cpp
+                                    libs/thread/src/pthread/*.cpp)
 list(FILTER boost_sources EXCLUDE REGEX "libs/test/src/.*_main.cpp")
 
 message(NOTICE "List of boost compiled sources : ${boost_sources}")
